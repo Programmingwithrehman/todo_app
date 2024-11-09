@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class UpdateTaskDetailScreen extends StatefulWidget {
   final String userId;
@@ -52,8 +53,34 @@ class _UpdateTaskDetailScreenState extends State<UpdateTaskDetailScreen> {
     super.dispose();
   }
 
-  void _updateTask() {
-    Navigator.of(context).pop(); // Close the screen after updating
+  // Update Task
+  Future<void> _updateTask(BuildContext context) async {
+    final url = Uri.parse('http://localhost/flutter_to-do-app/update_task.php?taskId=${widget.taskId}&title=${titleController.text}&description=${descriptionController.text}&priority=${selectedPriority}&dueDate=${dueDateController.text}&status=${selectedStatus}',);
+    //final url = Uri.parse('http://localhost/flutter_to-do-app/update_task.php?taskId=$taskId&title=$title&description=$description&priority=$priority&dueDate=$dueDate&status=$status');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        // Show success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Task Updated successfully')),
+        );
+
+        // Go back to the previous screen after updating
+        Navigator.pop(context);
+      } else {
+        // Show error message if the status code is not 200
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to update task. Please try again.')),
+        );
+      }
+    } catch (e) {
+      // Handle any exceptions
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Error: Unable to update task')),
+      );
+    }
   }
 
   void _deleteTask() {
@@ -64,7 +91,10 @@ class _UpdateTaskDetailScreenState extends State<UpdateTaskDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Update Task Details', style: TextStyle(color: Colors.white,),),
+        title: const Text(
+          'Update Task Details',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: const Color.fromRGBO(44, 34, 169, 1),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -74,7 +104,6 @@ class _UpdateTaskDetailScreenState extends State<UpdateTaskDetailScreen> {
           },
         ),
       ),
-      
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -150,7 +179,7 @@ class _UpdateTaskDetailScreenState extends State<UpdateTaskDetailScreen> {
                     icon: Icons.save,
                     label: 'Save Changes',
                     color: const Color.fromRGBO(44, 34, 169, 1),
-                    onPressed: _updateTask,
+                    onPressed: () => _updateTask(context),
                   ),
                   const SizedBox(width: 20),
                   _buildActionButton(
