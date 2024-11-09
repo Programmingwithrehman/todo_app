@@ -9,6 +9,8 @@ void main() {
 // This To-Do app was developed by Programming with Rehman.
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,6 +27,8 @@ class MyApp extends StatelessWidget {
 // This To-Do app was developed by Programming with Rehman.
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -38,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _startSplashScreen() async {
     // Show the splash screen for 5 seconds
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 5));
     _checkConnection();
   }
 
@@ -66,19 +70,19 @@ class _SplashScreenState extends State<SplashScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("No Internet Connection"),
-          content: Text("Please check your internet connection and try again."),
+          title: const Text("No Internet Connection"),
+          content: const Text("Please check your internet connection and try again."),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
                 _checkConnection(); // Retry the connection
               },
-              child: Text("Retry"),
+              child: const Text("Retry"),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text("Exit"),
+              child: const Text("Exit"),
             ),
           ],
         );
@@ -98,8 +102,8 @@ class _SplashScreenState extends State<SplashScreen> {
               width: 150, // Set the desired width
               height: 150, // Set the desired height
             ),
-            SizedBox(height: 20), // Space between logo and loading indicator
-            CircularProgressIndicator(), // Loading indicator
+            const SizedBox(height: 20), // Space between logo and loading indicator
+            const CircularProgressIndicator(), // Loading indicator
           ],
         ),
       ),
@@ -110,81 +114,85 @@ class _SplashScreenState extends State<SplashScreen> {
 // This To-Do app was developed by Programming with Rehman.
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          // Top 80% area with an image
-          Expanded(
-            flex: 6, // 80% of the screen
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/homescreen.png'), // Change to your image path
-                  fit: BoxFit.cover,
+  return Scaffold(
+  body: Stack(
+    children: [
+      // Background image covering the entire screen
+      Positioned.fill(
+        child: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/background.png'), // Your image
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
+      // Content overlay on top of the background
+      Align(
+        alignment: Alignment.bottomCenter,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,  // Position content at the bottom
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                'PWR ToDo App',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,  // Ensure text is visible on the background
                 ),
               ),
-            ),
-          ),
-          // Remaining area for heading, paragraph, and buttons
-          Expanded(
-            flex: 4, // 20% of the screen
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'PWR ToDo App',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Manage your tasks efficiently with our app. Developed by Programming With Rehman!',
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 20),
-                  // Login Button
-                  ElevatedButton(
-                    onPressed: () {
-                      // Add your login action here
-                      Navigator.push(
-                        context,
-                         MaterialPageRoute(builder: (context) => LoginScreen()),
-                      );
-                    },
-                    child: Text('Login'),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 50), // Full width button
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  // Register Button
-                  ElevatedButton(
-                    onPressed: () {
-                      // Add your register action here
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RegisterScreen()),
-                      );
-                    },
-                    child: Text('Register'),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 50), // Full width button
-                    ),
-                  ),
-                ],
+              const SizedBox(height: 10),
+              const Text(
+                'Manage your tasks efficiently with our app. Developed by Programming With Rehman!',
+                textAlign: TextAlign.left,
+                style: TextStyle(color: Colors.white),  // White text for visibility
               ),
-            ),
+              const SizedBox(height: 20),
+              // Login Button
+              ElevatedButton(
+                onPressed: () {
+                  // Navigate to login screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 50), // Full width button
+                ),
+                child: Text('Login'),
+              ),
+              const SizedBox(height: 10),
+              // Register Button
+              ElevatedButton(
+                onPressed: () {
+                  // Navigate to register screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RegisterScreen()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 50), // Full width button
+                ),
+                child: Text('Register'),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
-    );
+    ],
+  ),
+);
+
   }
 }

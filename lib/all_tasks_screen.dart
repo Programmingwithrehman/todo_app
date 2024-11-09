@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AllTasksScreen extends StatelessWidget {
   final String userId;
 
-  const AllTasksScreen({Key? key, required this.userId}) : super(key: key);
+  const AllTasksScreen({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class AllTasksScreen extends StatelessWidget {
       body: Center(
         child: Text(
           'All Tasks List here User id - $userId',
-          style: TextStyle(fontSize: 24),
+          style: const TextStyle(fontSize: 24),
         ),
       ),
     );

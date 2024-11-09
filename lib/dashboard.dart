@@ -9,8 +9,7 @@ class DashboardScreen extends StatefulWidget {
   final String username;
   final String userId;
 
-  const DashboardScreen({Key? key, required this.username, required this.userId})
-      : super(key: key);
+  const DashboardScreen({super.key, required this.username, required this.userId});
 
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
@@ -46,32 +45,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Navigator.pop(context); // Close the drawer
     _onNavigationTapped(index); // Update the selected index
   }
+  // Method to refresh the content
+  Future<void> _refreshContent() async {
+    // Implement your logic to refresh content here
+    setState(() {
+      // Rebuild the screen by setting the state
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Programming With Rehman"),
+        title: const Text("Programming With Rehman", style: TextStyle(color: Color.fromRGBO(44, 34, 169, 1)),),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
+              decoration: const BoxDecoration(
+                color: Color.fromRGBO(44, 34, 169, 1),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hello, ' + widget.username,
-                    style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                    'Hello, ${widget.username}',
+                    style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
-                    'User ID: ' + widget.userId,
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    'User ID: ${widget.userId}',
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ],
               ),
@@ -93,21 +99,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
               },
             ),*/
             ListTile(
-              title: Text('Dashboard'),
+              title: const Text('Dashboard'),
               onTap: () => _onDrawerItemTapped(1), // Set index for All Tasks
             ),
             ListTile(
-              title: Text('Pending Tasks'),
+              title: const Text('Pending Tasks'),
               onTap: () => _onDrawerItemTapped(2), // Set index for Pending Tasks
             ),
             ListTile(
-              title: Text('Upcoming Tasks'),
+              title: const Text('Upcoming Tasks'),
               onTap: () => _onDrawerItemTapped(0), // Set index for Upcoming Tasks
-            ), 
+            ),
           ],
         ),
       ),
-      body: _screens[_selectedIndex],
+      body: Stack(
+        children: [
+          // Background image
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/background.png'), // Replace with your background image
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          // Body content
+          RefreshIndicator(
+            onRefresh: _refreshContent, // Trigger refresh
+            child: _screens[_selectedIndex], // Display the selected screen
+          ),
+          //_screens[_selectedIndex],
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onNavigationTapped, // Use the same method for BottomNavigationBar
@@ -135,25 +159,26 @@ class DashboardContent extends StatelessWidget {
   final String userId;
   final String username;
 
-  const DashboardContent({Key? key, required this.userId, required this.username}) : super(key: key);
+  const DashboardContent({super.key, required this.userId, required this.username});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16.0),
+    return SingleChildScrollView(
+    //return Padding(
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "Welcome to $username!",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white,),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
             "User ID: $userId",
-            style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+            style: TextStyle(fontSize: 16, color: const Color.fromARGB(255, 248, 247, 247)),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -162,12 +187,12 @@ class DashboardContent extends StatelessWidget {
               _buildCard(context, Icons.calendar_today, "Upcoming"),
             ],
           ),
-          SizedBox(height: 20),
-          Text(
+          const SizedBox(height: 10),
+          const Text(
             "Quick Actions",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white,),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             children: [
               Expanded(
@@ -181,11 +206,11 @@ class DashboardContent extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: Icon(Icons.add),
-                  label: Text("Add New Task"),
+                  icon: const Icon(Icons.add),
+                  label: const Text("Add New Task"),
                 ),
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: () {
@@ -197,10 +222,11 @@ class DashboardContent extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: Icon(Icons.contact_mail),
-                  label: Text("Contact Us"),
+                  icon: const Icon(Icons.contact_mail),
+                  label: const Text("Contact Us"),
                 ),
               ),
+              const SizedBox(height: 20),
             ],
           ),
         ],
@@ -209,39 +235,38 @@ class DashboardContent extends StatelessWidget {
   }
 
   Widget _buildCard(BuildContext context, IconData icon, String title) {
-  double cardSize = MediaQuery.of(context).size.width * 0.25; // 40% of screen width
+    double cardSize = MediaQuery.of(context).size.width * 0.25; // 40% of screen width
 
-  return GestureDetector(
-    onTap: () {
-      // Add navigation to respective screen if needed
-    },
-    child: Card(
-      elevation: 5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12), // Rounded corners for aesthetics
-      ),
-      child: Container(
-        width: cardSize,
-        height: cardSize,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: cardSize * 0.4, // Make icon 40% of card size
-              color: Colors.blue,
-            ),
-            SizedBox(height: 10),
-            Text(
-              title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-          ],
+    return GestureDetector(
+      onTap: () {
+        // Add navigation to respective screen if needed
+      },
+      child: Card(
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12), // Rounded corners for aesthetics
+        ),
+        child: SizedBox(
+          width: cardSize,
+          height: cardSize,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: cardSize * 0.4, // Make icon 40% of card size
+                color: const Color.fromRGBO(44, 34, 169, 1),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                title,
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 }

@@ -5,6 +5,8 @@ import 'package:todo/dashboard.dart';
 // This To-Do app was developed by Programming with Rehman.
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -73,7 +75,21 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+  body: Stack(
+    children: [
+      // Background image
+      Positioned.fill(
+        child: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/background.png'), // Your image
+              fit: BoxFit.cover,  // Ensure the image covers the entire screen
+            ),
+          ),
+        ),
+      ),
+      // Login form on top of the background image
+      Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
@@ -81,18 +97,28 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  'Login',
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                // Align 'Login' text to the right
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Login',
+                      style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
-                  
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Email',
+                    labelStyle: TextStyle(color: Colors.white), // White label text
                     border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.email),
+                    prefixIcon: Icon(Icons.email, color: Colors.white), // White icon
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                   ),
+                  style: const TextStyle(color: Colors.white),
                   validator: (value) {
                     if (value!.isEmpty || !RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                       return 'Please enter a valid email';
@@ -103,14 +129,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     email = value;
                   },
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 TextFormField(
                   obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Password',
+                    labelStyle: TextStyle(color: Colors.white), // White label text
                     border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.lock),
+                    prefixIcon: Icon(Icons.lock, color: Colors.white), // White icon
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                   ),
+                  style: const TextStyle(color: Colors.white),
                   validator: (value) {
                     if (value!.isEmpty || value.length < 6) {
                       return 'Password must be at least 6 characters';
@@ -121,36 +152,42 @@ class _LoginScreenState extends State<LoginScreen> {
                     password = value;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: isLoading ? null : () {
                     if (_formKey.currentState!.validate()) {
                       _loginUser();
                     }
                   },
-                  child: isLoading
-                      ? CircularProgressIndicator() // Show loading indicator
-                      : Text('Login'),
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(double.infinity, 50), // Full-width button
+                    minimumSize: const Size(double.infinity, 50), // Full-width button
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
+                  child: isLoading
+                      ? const CircularProgressIndicator() // Show loading indicator
+                      : const Text('Login'),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context); // Navigate back to the previous screen
                   },
-                  child: Text('Don\'t have an account? Register'),
+                  child: const Text(
+                    'Don\'t have an account? Register',
+                    style: TextStyle(color: Colors.white), // White text
+                  ),
                 ),
               ],
             ),
           ),
         ),
       ),
-    );
+    ],
+  ),
+);
+
   }
 }
 // This To-Do app was developed by Programming with Rehman.

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'update_task_screen.dart';
 
 class TaskDetailScreen extends StatelessWidget {
   final String userId;
@@ -11,7 +12,7 @@ class TaskDetailScreen extends StatelessWidget {
   final String status;
 
   const TaskDetailScreen({
-    Key? key,
+    super.key,
     required this.userId,
     required this.taskId,
     required this.title,
@@ -19,7 +20,7 @@ class TaskDetailScreen extends StatelessWidget {
     required this.priority,
     required this.dueDate,
     required this.status,
-  }) : super(key: key);
+  });
 
   // Method to delete task using API
   Future<void> _deleteTask(BuildContext context) async {
@@ -34,7 +35,7 @@ class TaskDetailScreen extends StatelessWidget {
         
         // Show success message
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Task removed successfully')),
+          const SnackBar(content: Text('Task removed successfully')),
         );
         
         // Go back to the previous screen
@@ -42,13 +43,13 @@ class TaskDetailScreen extends StatelessWidget {
       } else {
         // Show error message if the status code is not 200
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to remove task. Please try again.')),
+          const SnackBar(content: Text('Failed to remove task. Please try again.')),
         );
       }
     } catch (e) {
       // Handle any exceptions
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: Unable to delete task')),
+        const SnackBar(content: Text('Error: Unable to delete task')),
       );
     }
   }
@@ -57,12 +58,13 @@ class TaskDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Task Details'),
+        title: const Text('Task Details', style: TextStyle(color: Colors.white),),
         centerTitle: true,
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: const Color.fromRGBO(44, 34, 169, 1),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
           onPressed: () {
             Navigator.pop(context); // This will take you back to the previous screen
           },
@@ -76,91 +78,130 @@ class TaskDetailScreen extends StatelessWidget {
             children: [
               // Task Title
               Container(
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 decoration: BoxDecoration(
-                  color: Colors.blueAccent.withOpacity(0.1),
+                  color: const Color.fromRGBO(44, 34, 169, 1).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent,
+                    color: Color.fromRGBO(44, 34, 169, 1),
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Task Details Section
-              buildDetailRow('User ID', userId),
+              buildDetailRow('User ID', userId,),
               buildDetailRow('Task ID', taskId),
               buildDetailRow('Priority', priority),
               buildDetailRow('Due Date', dueDate),
               buildDetailRow('Status', status),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Task Description
-              Text(
+              const Text(
                 'Description:',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.blueAccent,
+                  color: Color.fromRGBO(44, 34, 169, 1),
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Container(
-                padding: EdgeInsets.all(12),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   description,
-                  style: TextStyle(fontSize: 16, color: Colors.black87),
+                  style: const TextStyle(fontSize: 16, color: Colors.black87),
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
-              // Delete Button
+              // Delete Button 
               Center(
-                child: ElevatedButton.icon(
-                  icon: Icon(Icons.delete, color: Colors.white),
-                  label: Text('Delete Task'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                    textStyle: TextStyle(fontSize: 18),
-                  ),
-                  onPressed: () {
-                    // Show a confirmation dialog before deleting
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Delete Task'),
-                          content: Text('Are you sure you want to delete this task?'),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: Text('Cancel'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                _deleteTask(context); // Call delete function
-                              },
-                              child: Text('Delete', style: TextStyle(color: Colors.red)),
-                            ),
-                          ],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton.icon(
+                      icon: const Icon(Icons.delete, color: Colors.white),
+                      label: const Text(
+                        'Delete Task',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        textStyle: const TextStyle(fontSize: 18),
+                      ),
+                      onPressed: () {
+                        // Show a confirmation dialog before deleting
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Delete Task'),
+                              content: const Text('Are you sure you want to delete this task?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    _deleteTask(context); // Call delete function
+                                  },
+                                  child: const Text('Delete', style: TextStyle(color: Colors.red)),
+                                ),
+                              ],
+                            );
+                          },
                         );
                       },
-                    );
-                  },
+                    ),
+                    const SizedBox(width: 20), // Space between buttons
+                    ElevatedButton.icon(
+                      icon: const Icon(Icons.add, color: Colors.white),
+                      label: const Text(
+                        'Update Task',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        textStyle: const TextStyle(fontSize: 18),
+                      ),
+                      onPressed: () {
+                        // Add your add task functionality here
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdateTaskDetailScreen(
+                            userId: userId,
+                            taskId: taskId,
+                            title: title,
+                            description: description,
+                            priority: priority,
+                            dueDate: DateTime.parse(dueDate),
+                            status: status,
+                          ),
+                        ),
+                      );
+                      },
+                    ),
+                  ],
                 ),
               ),
+              
             ],
           ),
         ),
@@ -176,17 +217,17 @@ class TaskDetailScreen extends StatelessWidget {
         children: [
           Text(
             '$label:',
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: Colors.blueAccent,
+              color: Color.fromRGBO(44, 34, 169, 1),
             ),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(
             child: Text(
               value,
-              style: TextStyle(fontSize: 16, color: Colors.black54),
+              style: const TextStyle(fontSize: 16, color: Colors.black54),
             ),
           ),
         ],

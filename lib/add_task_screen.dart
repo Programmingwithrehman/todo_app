@@ -6,7 +6,7 @@ import 'package:intl/intl.dart'; // Import for date formatting
 class AddTaskScreen extends StatefulWidget {
   final String userId;
 
-  AddTaskScreen({required this.userId}); // Constructor
+  const AddTaskScreen({super.key, required this.userId}); // Constructor
 
   @override
   _AddTaskScreenState createState() => _AddTaskScreenState();
@@ -82,8 +82,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add New Task'),
-        backgroundColor: Colors.blueAccent,
+        title: const Text('Add New Task', style: TextStyle(color: Colors.white),),
+        backgroundColor: const Color.fromRGBO(44, 34, 169, 1),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          color: Colors.white,
+          onPressed: () {
+            Navigator.pop(context); // This will take you back to the previous screen
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -92,19 +99,19 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           child: SingleChildScrollView( // Allow scrolling for the form
             child: Column(
               children: [
-                Text(
+                const Text(
                   'Create a New Task',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Task Title',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.blueAccent),
+                      borderSide: const BorderSide(color: Color.fromRGBO(44, 34, 169, 1)),
                     ),
-                    prefixIcon: Icon(Icons.title, color: Colors.blueAccent),
+                    prefixIcon: const Icon(Icons.title, color: Color.fromRGBO(44, 34, 169, 1)),
                     filled: true,
                     fillColor: Colors.grey[200],
                   ),
@@ -118,15 +125,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     taskTitle = value;
                   },
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Description',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.blueAccent),
+                      borderSide: const BorderSide(color: Color.fromRGBO(44, 34, 169, 1)),
                     ),
-                    prefixIcon: Icon(Icons.description, color: Colors.blueAccent),
+                    prefixIcon: const Icon(Icons.description, color: Color.fromRGBO(44, 34, 169, 1)),
                     filled: true,
                     fillColor: Colors.grey[200],
                   ),
@@ -135,14 +142,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     taskDescription = value;
                   },
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 DropdownButtonFormField<String>(
                   value: priority,
                   decoration: InputDecoration(
                     labelText: 'Priority',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.blueAccent),
+                      borderSide: const BorderSide(color: Color.fromRGBO(44, 34, 169, 1)),
                     ),
                     filled: true,
                     fillColor: Colors.grey[200],
@@ -159,16 +166,16 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     });
                   },
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 TextFormField(
                   readOnly: true,
                   decoration: InputDecoration(
                     labelText: 'Due Date',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.blueAccent),
+                      borderSide: const BorderSide(color: Color.fromRGBO(44, 34, 169, 1)),
                     ),
-                    prefixIcon: Icon(Icons.calendar_today, color: Colors.blueAccent),
+                    prefixIcon: const Icon(Icons.calendar_today, color: Color.fromRGBO(44, 34, 169, 1)),
                     filled: true,
                     fillColor: Colors.grey[200],
                   ),
@@ -177,14 +184,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     text: dueDate != null ? DateFormat('yyyy-MM-dd').format(dueDate!) : '',
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 DropdownButtonFormField<String>(
                   value: status,
                   decoration: InputDecoration(
                     labelText: 'Status',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.blueAccent),
+                      borderSide: const BorderSide(color: Color.fromRGBO(44, 34, 169, 1)),
                     ),
                     filled: true,
                     fillColor: Colors.grey[200],
@@ -201,31 +208,31 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     });
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: isLoading ? null : () {
                     if (_formKey.currentState!.validate()) {
                       _addTask();
                     }
                   },
-                  child: isLoading
-                      ? CircularProgressIndicator(color: Colors.white)
-                      : Text('Add Task'),
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(double.infinity, 50),
-                    backgroundColor: Colors.blueAccent,
+                    minimumSize: const Size(double.infinity, 50),
+                    backgroundColor: const Color.fromRGBO(44, 34, 169, 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     elevation: 5, // Add some shadow effect
                   ),
+                  child: isLoading
+                      ? CircularProgressIndicator(color: Colors.white)
+                      : Text('Add Task', style: TextStyle(color: Colors.white),),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('Cancel', style: TextStyle(color: Colors.blueAccent)),
+                  child: const Text('Cancel', style: TextStyle(color: Color.fromRGBO(44, 34, 169, 1))),
                 ),
               ],
             ),

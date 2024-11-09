@@ -6,7 +6,7 @@ import 'task_detail_screen.dart';
 class UpcomingTasksScreen extends StatefulWidget {
   final String userId;
 
-  const UpcomingTasksScreen({Key? key, required this.userId}) : super(key: key);
+  const UpcomingTasksScreen({super.key, required this.userId});
 
   @override
   _UpcomingTasksScreenState createState() => _UpcomingTasksScreenState();
@@ -38,8 +38,8 @@ class _UpcomingTasksScreenState extends State<UpcomingTasksScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Upcoming Tasks"),
-        backgroundColor: Colors.blueAccent,
+        title: const Text("Upcoming Tasks", style: TextStyle(color: Colors.white),),
+        backgroundColor: const Color.fromRGBO(44, 34, 169, 1),
         automaticallyImplyLeading: false, // Removes the back arrow
         centerTitle: true, // Centers the title
       ),
@@ -47,7 +47,7 @@ class _UpcomingTasksScreenState extends State<UpcomingTasksScreen> {
         future: _upcomingTasks,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
@@ -57,19 +57,19 @@ class _UpcomingTasksScreenState extends State<UpcomingTasksScreen> {
               itemBuilder: (context, index) {
                 final task = tasks[index];
                 return Card(
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   elevation: 5,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: ListTile(
-                    contentPadding: EdgeInsets.all(15),
+                    contentPadding: const EdgeInsets.all(15),
                     title: Text(
                       task.title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent,
+                        color: Color.fromRGBO(44, 34, 169, 1),
                       ),
                     ),
                     subtitle: Padding(
@@ -81,21 +81,21 @@ class _UpcomingTasksScreenState extends State<UpcomingTasksScreen> {
                             task.description,
                             style: TextStyle(color: Colors.grey[700]),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Row(
                             children: [
-                              Icon(Icons.calendar_today, size: 14, color: Colors.grey),
-                              SizedBox(width: 5),
+                              const Icon(Icons.calendar_today, size: 14, color: Colors.grey),
+                              const SizedBox(width: 5),
                               Text(
                                 'Due: ${task.dueDate}',
-                                style: TextStyle(fontSize: 12, color: Colors.grey),
+                                style: const TextStyle(fontSize: 12, color: Colors.grey),
                               ),
-                              SizedBox(width: 15),
-                              Icon(Icons.priority_high, size: 14, color: Colors.orange),
-                              SizedBox(width: 5),
+                              const SizedBox(width: 15),
+                              const Icon(Icons.priority_high, size: 14, color: Colors.orange),
+                              const SizedBox(width: 5),
                               Text(
                                 'Priority: ${task.priority}',
-                                style: TextStyle(fontSize: 12, color: Colors.orange),
+                                style: const TextStyle(fontSize: 12, color: Colors.orange),
                               ),
                             ],
                           ),
@@ -128,7 +128,7 @@ class _UpcomingTasksScreenState extends State<UpcomingTasksScreen> {
               },
             );
           } else {
-            return Center(child: Text('No upcoming tasks found.'));
+            return const Center(child: Text('No upcoming tasks found.'));
           }
         },
       ),
