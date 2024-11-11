@@ -23,7 +23,7 @@ class _PendingTasksScreenState extends State<PendingTasksScreen> {
 
   Future<List<Task>> fetchPendingTasks(String userId) async {
     final response = await http.get(
-      Uri.parse('http://localhost/flutter_to-do-app/pending.php?userId=$userId'), // Use 10.0.2.2 for Android emulator
+      Uri.parse('https://thedailyearnings.online/flutter_to-do-app/pending.php?userId=$userId'), // Use 10.0.2.2 for Android emulator
     );
 
     if (response.statusCode == 200) {

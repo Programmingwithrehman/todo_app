@@ -23,7 +23,7 @@ class _UpcomingTasksScreenState extends State<UpcomingTasksScreen> {
 
   Future<List<Task>> fetchUpcomingTasks(String userId) async {
     final response = await http.get(
-      Uri.parse('http://localhost/flutter_to-do-app/upcomming.php?userId=$userId'), // Use 10.0.2.2 for Android emulator
+      Uri.parse('https://thedailyearnings.online/flutter_to-do-app/upcomming.php?userId=$userId'), // Use 10.0.2.2 for Android emulator
     );
 
     if (response.statusCode == 200) {

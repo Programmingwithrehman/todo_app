@@ -29,7 +29,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://localhost/flutter_to-do-app/tasks.php'),
+        Uri.parse('https://thedailyearnings.online/flutter_to-do-app/tasks.php'),
         body: {
           'user_id': widget.userId,
           'title': taskTitle,

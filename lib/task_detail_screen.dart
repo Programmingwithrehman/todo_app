@@ -24,7 +24,7 @@ class TaskDetailScreen extends StatelessWidget {
 
   // Method to delete task using API
   Future<void> _deleteTask(BuildContext context) async {
-    final url = Uri.parse('http://localhost/flutter_to-do-app/delete_task.php?taskId=$taskId');
+    final url = Uri.parse('https://thedailyearnings.online/flutter_to-do-app/delete_task.php?taskId=$taskId');
     
     try {
       final response = await http.get(url);

@@ -27,7 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://localhost/flutter_to-do-app/users_create.php'),
+        Uri.parse('https://thedailyearnings.online/flutter_to-do-app/users_create.php'),
         body: {
           'username': username,
           'email': email,

@@ -55,7 +55,7 @@ class _UpdateTaskDetailScreenState extends State<UpdateTaskDetailScreen> {
 
   // Update Task
   Future<void> _updateTask(BuildContext context) async {
-    final url = Uri.parse('http://localhost/flutter_to-do-app/update_task.php?taskId=${widget.taskId}&title=${titleController.text}&description=${descriptionController.text}&priority=${selectedPriority}&dueDate=${dueDateController.text}&status=${selectedStatus}',);
+    final url = Uri.parse('https://thedailyearnings.online/flutter_to-do-app/update_task.php?taskId=${widget.taskId}&title=${titleController.text}&description=${descriptionController.text}&priority=${selectedPriority}&dueDate=${dueDateController.text}&status=${selectedStatus}',);
     //final url = Uri.parse('http://localhost/flutter_to-do-app/update_task.php?taskId=$taskId&title=$title&description=$description&priority=$priority&dueDate=$dueDate&status=$status');
 
     try {

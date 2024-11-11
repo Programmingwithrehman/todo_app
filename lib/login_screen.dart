@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://localhost/flutter_to-do-app/users_login.php'), // Your login API endpoint
+        Uri.parse('https://thedailyearnings.online/flutter_to-do-app/users_login.php'), // Your login API endpoint
         body: {
           'email': email,
           'password': password,
